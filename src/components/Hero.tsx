@@ -87,7 +87,7 @@ const HeroDataFlow = () => (
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-start px-8 md:px-24 pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-center items-start px-6 md:px-24 pt-20 overflow-hidden">
       <div className="absolute inset-0 data-scrim -z-10 opacity-40" />
       <HeroDataFlow />
       
@@ -95,7 +95,7 @@ export default function Hero() {
       <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/5 blur-[80px] rounded-full" />
       <div className="absolute bottom-24 -left-24 w-48 h-48 bg-secondary/5 blur-[60px] rounded-full" />
 
-      <div className="max-w-5xl space-y-6 relative z-10">
+      <div className="max-w-7xl w-full space-y-8 md:space-y-10 relative z-10">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -110,18 +110,18 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="font-headline text-6xl md:text-8xl lg:text-[10rem] leading-[0.85] font-black tracking-tighter uppercase"
+          className="font-headline text-5xl sm:text-6xl md:text-8xl lg:text-[12rem] xl:text-[14rem] leading-[0.9] md:leading-[0.8] font-black tracking-tighter uppercase"
         >
           ENGINEERING <br />
           <span className="text-kinetic">THE IMPACT</span>
         </motion.h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end w-full">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-12 w-full">
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="md:col-span-6 text-on-surface-variant text-lg md:text-xl font-light leading-relaxed max-w-xl"
+            className="text-on-surface-variant text-base md:text-2xl font-light leading-relaxed max-w-3xl"
           >
             We build high-performance software, mobile automations, and AI systems tailored precisely for your business. SolutionX bridges the gap between raw complexity and human impact.
           </motion.p>
@@ -130,13 +130,13 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 1 }}
-            className="md:col-span-6 flex flex-wrap gap-4 md:justify-end"
+            className="flex flex-col sm:flex-row gap-4 shrink-0"
           >
-            <button className="px-8 py-4 bg-primary text-surface font-headline uppercase tracking-widest text-xs hover:opacity-90 transition-all duration-300 flex items-center gap-3 group font-bold">
+            <button className="px-8 py-4 md:px-10 md:py-5 bg-primary text-surface font-headline uppercase tracking-widest text-[10px] md:text-xs hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-3 group font-bold w-full sm:w-auto">
               Quick Call
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </button>
-            <button className="px-8 py-4 bg-surface-container-highest font-headline uppercase tracking-widest text-xs hover:bg-white/5 transition-all duration-300 flex items-center gap-3 group">
+            <button className="px-8 py-4 md:px-10 md:py-5 bg-surface-container-highest font-headline uppercase tracking-widest text-[10px] md:text-xs hover:bg-white/5 transition-all duration-300 flex items-center justify-center gap-3 group w-full sm:w-auto">
               View Solutions
             </button>
           </motion.div>
@@ -152,3 +152,4 @@ export default function Hero() {
     </section>
   );
 }
+
