@@ -1,7 +1,10 @@
-import { motion } from "motion/react";
-import { Search } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { Search, Menu, X } from "lucide-react";
+import { useState } from "react";
 
 export default function Navbar({ currentPage }: { currentPage: string }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const navItems = [
     { name: "Home", path: "#home" },
     { name: "Services", path: "#services" },
@@ -17,7 +20,7 @@ export default function Navbar({ currentPage }: { currentPage: string }) {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="bg-surface/60 backdrop-blur-xl border border-outline-variant/10 flex justify-between items-center px-8 py-3 rounded-full w-full max-w-5xl pointer-events-auto shadow-2xl"
+        className="bg-surface/60 backdrop-blur-xl border border-outline-variant/10 flex justify-between items-center px-6 md:px-8 py-3 rounded-full w-full max-w-5xl pointer-events-auto shadow-2xl relative"
       >
         <div className="text-xl font-black tracking-tighter text-white font-headline">
           <a href="#home">SOLUTION<span className="text-primary">X</span></a>
@@ -37,14 +40,53 @@ export default function Navbar({ currentPage }: { currentPage: string }) {
           ))}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           <button className="text-on-surface-variant hover:text-primary transition-colors hidden sm:block">
             <Search size={18} />
           </button>
-          <a href="#contact" className="kinetic-gradient text-surface font-headline uppercase tracking-widest text-[10px] px-5 py-2 rounded-full scale-95 active:scale-90 transition-all duration-300 font-bold">
+          <a href="#contact" className="kinetic-gradient text-surface font-headline uppercase tracking-widest text-[10px] px-5 py-2 rounded-full scale-95 active:scale-90 transition-all duration-300 font-bold hidden sm:block">
             Connect
           </a>
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-white p-2 md:hidden hover:bg-white/5 rounded-full transition-colors"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+
+        {/* Mobile Dropdown */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: -20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -20 }}
+              className="absolute top-full left-0 right-0 mt-4 bg-surface/90 backdrop-blur-2xl border border-outline-variant/10 rounded-3xl p-6 md:hidden flex flex-col gap-4 shadow-2xl"
+            >
+              {navItems.map((item) => (
+                <a 
+                  key={item.name}
+                  href={item.path} 
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`font-headline uppercase tracking-widest text-xs py-2 transition-colors ${
+                    currentPage === item.name.toLowerCase() ? "text-primary font-bold" : "text-on-surface-variant hover:text-white"
+                  }`}
+                >
+                  {item.name}
+                </a>
+              ))}
+              <hr className="border-outline-variant/10 my-2" />
+              <a 
+                href="#contact" 
+                onClick={() => setIsMenuOpen(false)}
+                className="kinetic-gradient text-surface font-headline uppercase tracking-widest text-xs px-6 py-4 rounded-xl text-center font-bold"
+              >
+                Connect Now
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.nav>
     </div>
   );

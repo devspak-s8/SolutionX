@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { useState } from "react";
 
 const layers = [
   {
@@ -9,32 +10,25 @@ const layers = [
     color: "primary"
   },
   {
-    id: "L4",
-    label: "L4 — Logic",
+    id: "L3",
+    label: "L3 — Logic",
     title: "Application Services",
     description: "API routing, service orchestration, and integration handling.",
     color: "secondary"
   },
   {
-    id: "L3",
-    label: "L3 — Core",
-    title: "Domain Core",
-    description: "Business logic, validation, workflows, and intelligent decisions.",
-    color: "primary"
-  },
-  {
     id: "L2",
-    label: "L2 — Data",
-    title: "Data Fabric",
-    description: "Data modelling, persistence, and analytics-ready structures.",
-    color: "secondary"
+    label: "L2 — Core",
+    title: "Domain Core",
+    description: "Business logic, validation, and intelligent decision engines.",
+    color: "primary"
   },
   {
     id: "L1",
     label: "L1 — Infra",
     title: "Infrastructure",
-    description: "Cloud-native orchestration, security protocols, and global scaling.",
-    color: "primary"
+    description: "Cloud-native orchestration and global security protocols.",
+    color: "secondary"
   }
 ];
 
@@ -66,112 +60,130 @@ const NeuralNetwork = () => (
           }}
         />
       ))}
-      {[...Array(12)].map((_, i) => (
-        <motion.line
-          key={`link-${i}`}
-          x1={`${Math.random() * 100}%`}
-          y1={`${Math.random() * 100}%`}
-          x2={`${Math.random() * 100}%`}
-          y2={`${Math.random() * 100}%`}
-          stroke="currentColor"
-          strokeWidth="0.5"
-          className="text-primary/10"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: [0, 1, 0] }}
-          transition={{
-            duration: 7 + Math.random() * 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
     </svg>
   </div>
 );
 
-const IsometricLayers = () => (
-  <div className="relative w-full h-[600px] flex items-center justify-center perspective-[1200px]">
-    <div className="relative w-[400px] h-[280px] transform-style-3d rotate-x-[55deg] rotate-z-[-35deg] -translate-y-16">
-      {layers.map((layer, i) => (
-        <motion.div
-          key={layer.id}
-          initial={{ opacity: 0, z: -200 }}
-          whileInView={{ opacity: 1, z: i * 50 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, delay: i * 0.15 }}
-          className="absolute inset-0 bg-surface-container-high/20 border border-white/5 backdrop-blur-md rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.4)] flex flex-col p-8 group overflow-hidden"
-          style={{ transform: `translateZ(${i * 50}px)` }}
-        >
+const IsometricLayers = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div 
+      className="relative w-full h-[600px] flex items-center justify-center perspective-[1500px]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="relative w-[450px] h-[320px] transform-style-3d rotate-x-[60deg] rotate-z-[-35deg] -translate-y-12">
+        {layers.map((layer, i) => (
+          <motion.div
+            key={layer.id}
+            initial={{ opacity: 0, y: 100, z: -200 }}
+            whileInView={{ 
+              opacity: 1, 
+              y: 0,
+              z: i * (isHovered ? 100 : 80) 
+            }}
+            viewport={{ once: true }}
+            transition={{ 
+              duration: 1.5, 
+              delay: i * 0.2,
+              ease: [0.16, 1, 0.3, 1],
+              z: { duration: 0.5, ease: "easeOut" }
+            }}
+            animate={{
+              y: [0, -10, 0],
+              z: i * (isHovered ? 100 : 80)
+            }}
+            // @ts-ignore
+            transition={{
+              y: {
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.5
+              },
+              z: { duration: 0.5, ease: "easeOut" }
+            }}
+            className="absolute inset-0 bg-surface-container-high/10 border border-white/10 backdrop-blur-xl rounded-2xl shadow-[0_0_60px_rgba(0,0,0,0.5)] flex flex-col p-10 group overflow-hidden"
+            style={{ 
+              transformStyle: 'preserve-3d',
+              transform: `translateZ(${i * (isHovered ? 100 : 80)}px)` 
+            }}
+          >
           {/* Subtle Glass Highlight */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.07] via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.1] via-transparent to-transparent pointer-events-none" />
           
           {/* Layer Label */}
           <div className="relative z-10 flex justify-between items-start">
-            <div className={`font-mono text-[9px] tracking-[0.3em] uppercase transition-colors duration-500 ${
-              i === 4 ? "text-primary font-bold" : "text-white/30"
+            <div className={`font-mono text-[10px] tracking-[0.4em] uppercase transition-colors duration-500 ${
+              i === 3 ? "text-primary font-bold" : "text-white/40"
             }`}>
               {layer.label}
             </div>
-            {i === 4 && (
-              <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_12px_rgba(177,197,255,1)] animate-pulse" />
+            {i === 3 && (
+              <div className="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_15px_rgba(177,197,255,1)] animate-pulse" />
             )}
           </div>
           
           {/* Top Layer Mock UI */}
-          {i === 4 && (
-            <div className="mt-12 space-y-4 opacity-40">
-              <div className="flex gap-2">
-                <div className="h-1.5 w-12 bg-primary/40 rounded-full" />
-                <div className="h-1.5 w-24 bg-white/10 rounded-full" />
+          {i === 3 && (
+            <div className="mt-12 space-y-6 opacity-60">
+              <div className="flex gap-3">
+                <div className="h-2 w-16 bg-primary/40 rounded-full" />
+                <div className="h-2 w-32 bg-white/10 rounded-full" />
               </div>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="h-16 bg-white/5 rounded-lg border border-white/5" />
-                <div className="h-16 bg-white/5 rounded-lg border border-white/5" />
-                <div className="h-16 bg-white/5 rounded-lg border border-white/5" />
+              <div className="grid grid-cols-3 gap-4">
+                <div className="h-20 bg-white/5 rounded-xl border border-white/5" />
+                <div className="h-20 bg-white/5 rounded-xl border border-white/5" />
+                <div className="h-20 bg-white/5 rounded-xl border border-white/5" />
               </div>
-              <div className="h-1.5 w-full bg-white/5 rounded-full" />
+              <div className="h-2 w-full bg-white/5 rounded-full" />
             </div>
           )}
 
           {/* Deeper Layers Content (Faint) */}
-          {i < 4 && (
-            <div className="mt-auto opacity-10">
-              <div className="h-[1px] w-full bg-white/20 mb-2" />
-              <div className="flex justify-between text-[6px] font-mono tracking-widest uppercase">
-                <span>System_Node_0{i+1}</span>
-                <span>Active</span>
+          {i < 3 && (
+            <div className="mt-auto opacity-20">
+              <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent mb-3" />
+              <div className="flex justify-between text-[7px] font-mono tracking-widest uppercase">
+                <span>Core_Module_v0{i+1}</span>
+                <span className="text-primary/60">Optimized</span>
               </div>
             </div>
           )}
 
           {/* Animated Scan Line */}
           <motion.div
-            animate={{ y: ["-100%", "300%"] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "linear", delay: i * 0.8 }}
-            className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent pointer-events-none"
+            animate={{ y: ["-100%", "400%"] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "linear", delay: i * 1.2 }}
+            className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-primary/30 to-transparent pointer-events-none"
           />
         </motion.div>
       ))}
       
       {/* Vertical Data Connectors */}
       <div className="absolute inset-0 transform-style-3d pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <div
+        {[...Array(8)].map((_, i) => (
+          <motion.div
             key={i}
-            className="absolute w-[0.5px] bg-gradient-to-b from-primary/0 via-primary/20 to-primary/0"
+            initial={{ height: 0, opacity: 0 }}
+            whileInView={{ height: 320, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 2, delay: 1 }}
+            className="absolute w-[1px] bg-gradient-to-b from-primary/0 via-primary/40 to-primary/0"
             style={{
-              height: '250px',
-              left: `${15 + Math.random() * 70}%`,
-              top: `${15 + Math.random() * 70}%`,
+              left: `${10 + Math.random() * 80}%`,
+              top: `${10 + Math.random() * 80}%`,
               transform: 'rotateX(-90deg)',
               transformOrigin: 'top'
             }}
           />
         ))}
       </div>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function ArchitecturalLayers() {
   return (

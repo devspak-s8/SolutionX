@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import TechStack from "./components/TechStack";
 import Services from "./components/Services";
+import Process from "./components/Process";
 import ArchitecturalLayers from "./components/ArchitecturalLayers";
 import Projects from "./components/Projects";
 import Testimonials from "./components/Testimonials";
@@ -78,6 +79,7 @@ export default function App() {
             <Hero />
             <TechStack />
             <Services />
+            <Process />
             <ArchitecturalLayers />
             <Projects />
             <Testimonials />
@@ -99,6 +101,7 @@ export default function App() {
             <Hero />
             <TechStack />
             <Services />
+            <Process />
             <ArchitecturalLayers />
             <Contact />
           </motion.div>
