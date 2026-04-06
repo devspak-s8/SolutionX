@@ -85,7 +85,7 @@ export default function BackgroundEffect() {
 
       {/* Floating Data Particles */}
       <div className="absolute inset-0">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(10)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ 
@@ -95,38 +95,38 @@ export default function BackgroundEffect() {
             }}
             animate={{ 
               y: [null, (Math.random() * 100 - 50) + "%"],
-              opacity: [0, 0.2, 0],
+              opacity: [0, 0.15, 0],
             }}
             transition={{
-              duration: 5 + Math.random() * 10,
+              duration: 8 + Math.random() * 12,
               repeat: Infinity,
               ease: "linear",
               delay: Math.random() * 5
             }}
-            className="absolute w-1 h-1 bg-primary rounded-full"
+            className="absolute w-1 h-1 bg-primary rounded-full will-change-transform"
           />
         ))}
       </div>
 
       {/* Large Ambient Pulses */}
       <div className="absolute inset-0">
-        {[...Array(3)].map((_, i) => (
+        {[...Array(2)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ 
-              opacity: [0, 0.05, 0],
-              scale: [0.8, 1.2, 0.8],
+              opacity: [0, 0.03, 0],
+              scale: [0.8, 1.1, 0.8],
               x: Math.random() * 100 + "%",
               y: Math.random() * 100 + "%"
             }}
             transition={{
-              duration: 10 + i * 5,
+              duration: 15 + i * 10,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: i * 3
+              delay: i * 5
             }}
-            className="absolute w-[800px] h-[800px] bg-primary/10 blur-[180px] rounded-full"
+            className="absolute w-[600px] h-[600px] bg-primary/5 blur-[150px] rounded-full will-change-transform"
           />
         ))}
       </div>

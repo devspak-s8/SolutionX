@@ -13,8 +13,8 @@ const HeroDataFlow = () => (
           </feMerge>
         </filter>
       </defs>
-      {[...Array(15)].map((_, i) => {
-        const yStart = 50 + i * 70;
+      {[...Array(8)].map((_, i) => {
+        const yStart = 100 + i * 120;
         const pathD = `M ${-100} ${yStart} C ${200 + i * 80} ${yStart}, ${400 + i * 40} ${200 + i * 80}, ${800 + i * 80} ${200 + i * 80} S ${1200 + i * 40} ${400 + i * 70}, 2000 ${400 + i * 70}`;
         
         return (
@@ -38,7 +38,7 @@ const HeroDataFlow = () => (
               filter="url(#glow)"
               animate={{ strokeDashoffset: [400, 0] }}
               transition={{
-                duration: 4 + i * 1.2,
+                duration: 6 + i * 2,
                 repeat: Infinity,
                 ease: "linear"
               }}
@@ -50,34 +50,11 @@ const HeroDataFlow = () => (
               filter="url(#glow)"
             >
               <animateMotion
-                dur={`${3 + i * 1.5}s`}
+                dur={`${5 + i * 2}s`}
                 repeatCount="indefinite"
                 path={pathD}
               />
             </motion.circle>
-
-            {/* Branching paths */}
-            {i % 4 === 0 && (
-              <motion.path
-                d={`M ${400 + i * 40} ${200 + i * 80} L ${500 + i * 40} ${100 + i * 80}`}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="0.5"
-                className="text-primary/20"
-                strokeDasharray="5, 5"
-              />
-            )}
-            
-            {/* Interconnecting vertical lines */}
-            {i % 3 === 0 && (
-              <motion.path
-                d={`M ${300 + i * 50} ${50 + i * 80} L ${300 + i * 50} ${50 + (i + 2) * 80}`}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="0.5"
-                className="text-primary/10"
-              />
-            )}
           </g>
         );
       })}
@@ -152,4 +129,3 @@ export default function Hero() {
     </section>
   );
 }
-
